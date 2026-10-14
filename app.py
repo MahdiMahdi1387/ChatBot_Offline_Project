@@ -29,3 +29,17 @@ if prompt:
 if st.button('DELETE HISTORY'):
     st.session_state['messages'] = [{'role': 'ai',
                                     'content': 'How can I help You?'}]
+
+if st.button('SAVE SUMMARY') and \
+    len(st.session_state['messages']) >= 3:
+    chat = 'Summarize this conersation:\n\n'
+    for msg in st.session_state['messages']:
+        chat += msg['role'] + ' : ' + msg['content'] + '\n\n\n'
+
+    with st.spinner('Generating the summarized text...'):
+        result = ut.call_ollama_model(chat, model)
+
+    with open('summary.txt', 'w', encoding='utf-8') as f:
+        f.write(result)
+
+    st.success('YOU CHAT SUCCESSFULLY SUMMARIZED IN summary.txt!')
