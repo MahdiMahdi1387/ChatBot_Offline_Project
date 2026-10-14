@@ -25,3 +25,7 @@ if prompt:
     st.chat_message('ai').write(response)
     st.session_state['messages'].append({'role': 'ai',
                                         'content' : response})
+
+if st.button('DELETE HISTORY'):
+    st.session_state['messages'] = [{'role': 'ai',
+                                    'content': 'How can I help You?'}]
